@@ -31,9 +31,9 @@ function [G_lcc,A_lcc] = load_data(input, K, m, gamma, a)
 % - A_lcc  Adjacency matrix of the largest connected component
 % 
 % DEPENDENCIES
-% - generateRDRG -- checked
-% - multilevel_model -- checked
-% - max_connected_subgraph -- checked
+% - generateRDRG
+% - multilevel_model
+% - max_connected_subgraph
 
 
     if input == 1 %pRDRG model
@@ -46,41 +46,36 @@ function [G_lcc,A_lcc] = load_data(input, K, m, gamma, a)
         G = digraph(A);
         G.Nodes.h = h';
 
-    elseif input ==3  %food web
-        fileID = fopen('datasets/FloridaBay.txt','r');
+    elseif input ==3  %food web, original file can be downloaded from https://snap.stanford.edu/data/Florida-bay.html
+        fileID = fopen('datasets/Florida-Bay.txt','r'); 
         formatSpec = '%d %d'; sizeA = [2 Inf]; in = fscanf(fileID,formatSpec,sizeA); edge = in'; % read edges from txt file
         G = digraph(categorical(edge(:,1)),categorical(edge(:,2)));
         NodesList = readtable('datasets/Florida-bay-meta.csv', 'ReadVariableNames',true, 'ReadRowNames',true, 'TextType', 'char');
         NodesList = table2cell(NodesList);
         G.Nodes.Name = NodesList(:,1);
-        %G.Nodes.Group = NodesList(:,2);
         G = rmnode(G,{'Benthic POC','Water POC',  'DOC'});
         
-    elseif input == 4 %word adjacency
-        s = tdfread('datasets/word_adjacency/word_adjacency_edges.csv', ';');
-        %tdfread('datasets/word_adjacency/word_adjacency_nodes.csv', ';');
+    elseif input == 4 %word adjacency, original file can be downloaded from http://www-personal.umich.edu/~mejn/netdata/adjnoun.zip
+        s = tdfread('datasets/word_adjacency_edges.csv', ';');
         G = digraph(categorical(s.Source),categorical(s.Target));
-        %G.Nodes.Color = value;
         
-    elseif input == 5 %political blogsphere
-        %tdfread('datasets/polblogs/polblogs_nodes.csv', ',');
-        s = tdfread('datasets/polblogs/polblogs_edges.csv', ',');
+    elseif input == 5 %political blogsphere, original file can be downloaded http://www-personal.umich.edu/~mejn/netdata/polblogs.zip
+        s = tdfread('datasets/polblogs_edges.csv', ',');
         G = digraph(categorical(s.Source),categorical(s.Target));
         G = simplify(G);
-
         
-    elseif input == 6 %Dunnhumby shopping data
-        load('processed_data/condP');
+    elseif input == 6 %Dunnhumby 'The Complete Journey' shopping data, original data can be downloaded from https://www.dunnhumby.com/source-files/
+        load('datasets/condP');
         threshold = 0.4;
         A = (condP > threshold) - eye(length(condP));
         G = digraph(A);
         G.Nodes.Name = commodity_name;
         
-    elseif input == 7 %Reopen of venue
+    elseif input == 7 %Reopen of venue 
         load('datasets/melted_cormat');
         G = digraph(M, names); 
         
-    elseif input == 8 %US 2015 inflow outflow
+    elseif input == 8 %US 2015 inflow outflow 
         T = readtable('datasets/US_io_2015.csv', 'ReadRowNames', 1);
         W = table2array(T); % input weight matrix
         A = zeros(size(W));
@@ -110,7 +105,7 @@ function [G_lcc,A_lcc] = load_data(input, K, m, gamma, a)
         edge = in';
         G = digraph(categorical(edge(:,1)),categorical(edge(:,2)));
         
-    elseif input == 12 %transportation  reachability
+    elseif input == 12 %transportation reachability
         fileID = fopen('datasets/reachability.txt','r');
         formatSpec = '%d %d %d';
         sizeA = [3 Inf];
@@ -146,7 +141,7 @@ function [G_lcc,A_lcc] = load_data(input, K, m, gamma, a)
 
     end
     
-    if any([1, 2, 4, 6, 7, 11]== input)
+    if any([2, 4, 6, 7, 11]== input)
             G_lcc = max_connected_subgraph(G,'weak'); % extract largest weakly connected component
     else
          G_lcc = max_connected_subgraph(G,'strong'); % extract largest strongly connected component
