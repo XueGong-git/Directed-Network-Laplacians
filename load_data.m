@@ -71,11 +71,15 @@ function [G_lcc,A_lcc] = load_data(input, K, m, gamma, a)
         G = digraph(A);
         G.Nodes.Name = commodity_name;
         
-    elseif input == 7 %Reopen of venue 
+    elseif input == 7 
+        %Reopen of venue, the matrix is from Figure 1 in the paper Benzell SG, Collis A, Nicolaides C.Rationing social contact 
+        %during the COVID-19 pandemic: Transmission risk and social benefitsof US locations.Proceedings of the National Academy 
+        %of Sciences. 2020;117(26):14642–14644.
+        %matrix entries with value 1 correspond to the yellow cells in Figure 1
         load('datasets/melted_cormat');
         G = digraph(M, names); 
         
-    elseif input == 8 %US 2015 inflow outflow 
+    elseif input == 8 %US 2015 input-output matrix https://stats.oecd.org/Index.aspx?DataSetCode=IOTSI4_2018
         T = readtable('datasets/US_io_2015.csv', 'ReadRowNames', 1);
         W = table2array(T); % input weight matrix
         A = zeros(size(W));
@@ -83,13 +87,13 @@ function [G_lcc,A_lcc] = load_data(input, K, m, gamma, a)
         G = digraph(A);
         G.Nodes.Name = T.Properties.RowNames;  
         
-    elseif input == 9 %world trade
+    elseif input == 9 %world trade relations http://www.economicswebinstitute.org/worldtrade.htm
         T = readtable('datasets/trade_1998.csv', 'ReadRowNames', 1);
         W = table2array(T);
         G = digraph(W);
         G.Nodes.Name = T.Properties.RowNames;
         
-    elseif input == 10 %C-elegans-frontal
+    elseif input == 10 %C-elegans-frontal, original data downloaded from http://snap.stanford.edu/data/C-elegans-frontal.html
         fileID = fopen('datasets/C-elegans-frontal.txt','r');
         formatSpec = '%d %d';
         sizeA = [2 Inf];
@@ -97,7 +101,7 @@ function [G_lcc,A_lcc] = load_data(input, K, m, gamma, a)
         edge = in';
         G = digraph(categorical(edge(:,1)),categorical(edge(:,2)));
         
-    elseif input == 11 %S-cerevisiae
+    elseif input == 11 %S-cerevisiae, original data downloaded from http://snap.stanford.edu/data/S-cerevisiae.html
         fileID = fopen('datasets/S-cerevisiae.txt','r');
         formatSpec = '%d %d %d';
         sizeA = [3 Inf];
@@ -105,7 +109,7 @@ function [G_lcc,A_lcc] = load_data(input, K, m, gamma, a)
         edge = in';
         G = digraph(categorical(edge(:,1)),categorical(edge(:,2)));
         
-    elseif input == 12 %transportation reachability
+    elseif input == 12 %transportation reachability, original data downloaded from http://snap.stanford.edu/data/reachability.html
         fileID = fopen('datasets/reachability.txt','r');
         formatSpec = '%d %d %d';
         sizeA = [3 Inf];
@@ -113,7 +117,7 @@ function [G_lcc,A_lcc] = load_data(input, K, m, gamma, a)
         edge = in';
         G = digraph(categorical(edge(:,1)),categorical(edge(:,2)));
         
-    elseif input == 13 %influence matrix
+    elseif input == 13 %influence matrix, from Cole A.The influence matrix methodology: A technical report.Landcare Research Contract Report: LC0506/175. 2006.
         T = readtable('datasets/imatrix.csv', 'ReadRowNames', 1);
         W = table2array(T);
         W = W - diag(diag(W));
@@ -122,14 +126,14 @@ function [G_lcc,A_lcc] = load_data(input, K, m, gamma, a)
         G.Nodes.Name = T.Properties.RowNames;  
         imagesc(A);
         
-    elseif input == 14 %country to country flight matirx
+    elseif input == 14 %country to country flight matirx, original data downloaded from https://www.visualizing.org/global-flights-network/
         T = readtable('datasets/airport_CnToCn_ajc.csv', 'ReadRowNames', 1);
         W = table2array(T);
         A = select_top_partners(W,10, 2);
         G = digraph(A);
         G.Nodes.Name = T.Properties.RowNames; 
     
-    elseif input == 15 %US migration
+    elseif input == 15 %US migration, original data downloaded from https://www.census.gov/content/census/en/library/publications/2003/dec/censr-8.html
         W = readtable('datasets/US state migration.csv', 'ReadVariableNames',true, 'ReadRowNames',true, 'Format','auto');
         NodesList = readtable('datasets/US_states_list.csv', 'ReadVariableNames',false, 'ReadRowNames',false, 'TextType', 'char');
         W = W{:,:}; W=W'; 
