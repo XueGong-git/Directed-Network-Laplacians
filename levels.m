@@ -1,6 +1,6 @@
 function [h] = levels(W,varargin)
 % Obtains generalised heights as introduced in [1] (Eq.6). 
-% All equation numbers refer to our paper [1].
+% All equation numbers refer to paper [1].
 
 % INPUTS
 % Required inputs
@@ -30,8 +30,8 @@ function [h] = levels(W,varargin)
 % - parseArgs (TC Toolbox).
 
 % REFERENCES
-% - [1] MacKay, Johnson and Sansom (2020) How directed is a directed
-%         network? (Paper available at: https://arxiv.org/pdf/2001.05173.pdf).
+% - [1] MacKay, Robert S., Samuel Johnson, and Benedict Sansom. "How directed is a 
+% directed network?." Royal Society open science 7.9 (2020): 201138. https://doi.org/10.1098/rsos.201138
 % 
 %Contact: bazil.sansom@warwick.ac.uk
 
