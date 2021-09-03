@@ -47,7 +47,7 @@ G_ML = meigenmaps(G_rand, g); % estimage phase angles using the Magnetic Laplaci
 [h_est] = levels(A_rand); % estimate trophic level using the Trophic Laplacian
 
 %preallocate arrays
-test_gamma = linspace(0,10,21);% test points for gamma
+test_gamma = linspace(0,20,41);% test points for gamma
 Ln_ML = zeros(1, length(test_gamma));% log-likelihood of directed pRDRG model
 Ln_TL = zeros(1, length(test_gamma));% log-likelihood of Trohpic RDRG model
 nedge_exp_ML = zeros(1, length(test_gamma));% expected number of edges of directed pRDRG 
