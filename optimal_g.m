@@ -36,7 +36,7 @@ function [opt_k_ML, Nnodes, Nedges] = optimal_g(input, G_lcc)
 %parameters for grid search
 kmax = 6; k_test = linspace(2, kmax, kmax-1);
 g_ML = 1./k_test; % test likelihood on g_ML
-test_gamma = linspace(0,10,21);
+test_gamma = linspace(0,20,41);
 Ln = zeros(size(g_ML,2), length(test_gamma));
 
 %load and prepare data
