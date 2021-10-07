@@ -7,6 +7,6 @@ The script 'main.m' generates figures and tables presented in the paper "Directe
 
 'meigenmaps.m' - impliments the Magnetic Laplacian algorithm.
 
-'levels.m' - impliments the Trophic Laplacian algorithm.
+'levels.m' - implements the Trophic Laplacian algorithm.
 
 'model_comparison.m' - compares the likelihood of pRDRG model with the trphic Laplacian model.
