@@ -1,5 +1,5 @@
 function [A, h] = multilevel_model(K,m,gamma,a)
-% generateRDRG  Generate synthetic network from the trophic RDRG model
+% multilevel_model  Generate synthetic network from the trophic RDRG model
 % 
 % INPUTS
 % - K Number of clusters
