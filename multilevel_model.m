@@ -12,7 +12,7 @@ function [A, h] = multilevel_model(K,m,gamma,a)
 % - theta  True phase angles of nodes
 
 n = m*K; % total number of nodes
-h = sort(repmat(linspace(0,K-1,K),1,m)+(2*a*rand(1,n)-a)); % trophic levels
+h = sort(repmat(linspace(0,K-1,K),1,m)+(2*a*rand(1,n)-a)); %  generate trophic levels that form K clusters with additive noice ~unif(-a, a)
 A = zeros(n,n); % preallocate adjacency matrix
 f = zeros(n,n); % preallocate edge probability
 F = zeros(n,n); % preallocate trophic incoherence
