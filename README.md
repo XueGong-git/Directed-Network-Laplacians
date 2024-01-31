@@ -1,5 +1,7 @@
 # Directed-Graph-Laplacian
-The main script 'main.m' generates figures and tables presented in the paper "Directed Network Laplacians and Random Graph Models".
+The main script 'main.m' generates figures and tables presented in the paper:
+
+Gong, Xue, Desmond J. Higham, and Konstantinos Zygalakis. "Directed network Laplacians and random graph models." Royal Society Open Science 8, no. 10 (2021): 211144."Directed Network Laplacians and Random Graph Models".
 
 load_data.m  Reads in the network data and output the largest connected component it into a graph object
 
